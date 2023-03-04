@@ -1,11 +1,13 @@
 const songname = document.getElementById("songname");
-const bandname = document.getElementById("bandname")
+const bandname = document.getElementById("bandname");
 const song = document.getElementById("audio");
-const cover = document.getElementById("cover")
-const play = document.getElementById("play")
-const next = document.getElementById("next")
-const back = document.getElementById("back")
-
+const cover = document.getElementById("cover");
+const play = document.getElementById("play");
+const next = document.getElementById("next");
+const back = document.getElementById("back");
+const currentprogress = document.getElementById('current-progress');
+const progresscontainer = document.getElementById('progresscontainer');
+ 
 const napista = {
     songname: "Na pista",
     artist: "Thehc Mc,Aka Far",
@@ -21,6 +23,7 @@ const Minhalevada = {
     artist: "Thehc Mc",
     file: "Minha levada",
 };
+
 
 let IsPlaying = false;
 const playlist = [napista, Lucidez, Minhalevada];
@@ -66,6 +69,7 @@ function backsong() {
     playsong();
 }
 
+
 function nextsong() {
     if (index === playlist.length - 1) {
         index = 0;
@@ -77,9 +81,22 @@ function nextsong() {
     playsong();
 }
 
+function UpdateProgressBar() {
+    const barWidth = (song.currentTime/song.duration)*100;
+    currentprogress.style.setProperty('--progress', `${barWidth}%`);
+}
+
+function jumpTo(event){
+   const width = progresscontainer.clientWidth;
+   const clickposition = event.offsetX 
+   const jumpToTime = (clickposition/width)* song.duration;
+   song.currentTime = jumpToTime;
+}
+
 inicializarmusica();
 
 play.addEventListener('click', playPausedecider);
-back.addEventListener("click",backsong)
-next.addEventListener("click",nextsong)
-
+back.addEventListener("click",backsong);
+next.addEventListener("click",nextsong);
+song.addEventListener('timeupdate',UpdateProgressBar);
+progresscontainer.addEventListener('click',jumpTo);
