@@ -1,6 +1,6 @@
 body {
-  background-image: linear-gradient(rgba(49, 49, 49, 0.966),
-      rgb(55, 59, 112));
+  background-image: linear-gradient(rgb(0, 0, 0),
+      rgb(50, 0, 63));
   height: 100vh;
   color: white;
   font-family: sans-serif;
@@ -9,7 +9,7 @@ body {
   align-items: center;
 }
 
-button {
+.button {
   background-color: inherit;
   color: inherit;
   border: none;
@@ -32,6 +32,7 @@ button {
 
 .button {
   font-size: 1.5em;
+  cursor: pointer;
 }
 
 .button-navigate {
@@ -68,11 +69,11 @@ button {
 }
 
 .light-color {
-  color: rgb(201, 199, 199)
+  color: rgb(100, 100, 100)
 }
 
 #progressebar {
-  background-color: rgb(153, 151, 151);
+  background-color: rgb(100, 100, 100);
   height: 3.5px;
   width: 100%;
   border-radius: 20px;
@@ -80,12 +81,16 @@ button {
 
 #currentprogress {
   --progress: 0%;
-  background-color: rgb(255, 0, 0);
+  background-color: rgb(91, 0, 94);
   height: inherit;
-  width: 30px;
+  width: var(--progress);
   border-radius: inherit;
 }
 
 #progresscontainer {
   padding-bottom: 1em;
+}
+
+.button-active {
+  color: rgb(242, 0, 250);
 }
