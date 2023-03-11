@@ -88,9 +88,18 @@ body {
 }
 
 #progresscontainer {
-  padding-bottom: 1em;
+ cursor: pointer;
 }
 
 .button-active {
   color: rgb(242, 0, 250);
+}
+
+#time-box {
+  display: flex;
+flex-direction: row;
+justify-content: space-between;
+font-size: smaller;
+font-style: italic;
+margin-top: 0.1cm;
 }
