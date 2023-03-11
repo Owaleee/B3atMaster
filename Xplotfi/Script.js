@@ -9,6 +9,8 @@ const currentprogress = document.getElementById('currentprogress');
 const progresscontainer = document.getElementById('progresscontainer');
 const shuffleButton = document.getElementById('embaralhar');
 const repeatButton = document.getElementById('repeat');
+const songTime = document.getElementById("song-time")
+const totalTime = document.getElementById("total-time")
 
 
 const napista = {
@@ -29,7 +31,8 @@ const Minhalevada = {
 
 
 let IsPlaying = false;
-let isShuffled = false
+let isShuffled = false;
+let repeatOn = false;
 const originalPlaylist = [napista, Lucidez, Minhalevada];
 let sortedPlaylist = [...originalPlaylist];
 let index = 0;
@@ -89,9 +92,10 @@ function nextsong() {
     playsong();
 }
 
-function UpdateProgressBar() {
+function UpdateProgress() {
     const barWidth = (song.currentTime / song.duration) * 100;
     currentprogress.style.setProperty('--progress', `${barWidth}%`);
+    songTime.innerText = toHHMMSS(song.currentTime);
 }
 
 function jumpTo(event) {
@@ -99,6 +103,7 @@ function jumpTo(event) {
     const clickposition = event.offsetX
     const jumpToTime = (clickposition / width) * song.duration;
     song.currentTime = jumpToTime;
+
 }
 
 function shuffleArray(preShuffleArray){
@@ -127,15 +132,50 @@ function shuffleButtonClicked() {
 }
 
 function repeatButtonClicked(){
-    
+    if(repeatOn === false) {
+    repeatOn = true;
+    repeatButton.classList.add('button-active');
 }
+    else {
+        repeatOn=false
+        repeatButton.classList.remove("button-active");
+    }
+    }
+
+    function nextOrRepeat() {
+        if (repeatOn === false){
+            nextsong();
+        }
+        else {
+            playsong();
+        }
+    }
+function toHHMMSS(originalNumber) {
+let hours = Math.floor(originalNumber / 3600)
+let min = Math.floor((originalNumber - hours * 3600) / 60);
+let secs = Math.floor(originalNumber -hours* 3600 - min * 60);
+
+return `${hours.toString().padStart(2, '0')}:${min
+    .toString()
+    .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+}
+
+
+function updateTotalTime() {
+    toHHMMSS(song.duration);
+    totalTime.innerText = toHHMMSS (song.duration);
+}
+
+
 
 inicializarmusica();
 
 play.addEventListener('click', playPausedecider);
 back.addEventListener("click", backsong);
 next.addEventListener("click", nextsong);
-song.addEventListener('timeupdate', UpdateProgressBar);
+song.addEventListener('timeupdate', UpdateProgress);
+song.addEventListener('ended', nextOrRepeat);
+song.addEventListener('loadedmetadata', updateTotalTime);
 progresscontainer.addEventListener('click', jumpTo);
 shuffleButton.addEventListener('click', shuffleButtonClicked);
 repeatButton.addEventListener('click', repeatButtonClicked);
