@@ -5,6 +5,7 @@ const cover = document.getElementById("cover");
 const play = document.getElementById("play");
 const next = document.getElementById("next");
 const back = document.getElementById("back");
+const likebutton = document.getElementById("like")
 const currentprogress = document.getElementById('currentprogress');
 const progresscontainer = document.getElementById('progresscontainer');
 const shuffleButton = document.getElementById('embaralhar');
@@ -17,23 +18,30 @@ const napista = {
     songname: "Na pista",
     artist: "-Thehc Mc,Aka Far-",
     file: "Na pista",
+    liked: false,
 };
 const Lucidez = {
     songname: "Lucidez",
     artist: "-Thehc Mc-",
     file: "Lucidez",
+    liked: false,
 };
 const Minhalevada = {
     songname: "Minha levada",
     artist: "-Thehc Mc-",
     file: "Minha levada",
+    liked: false,
 };
 
 
 let IsPlaying = false;
 let isShuffled = false;
 let repeatOn = false;
-const originalPlaylist = [napista, Lucidez, Minhalevada];
+const originalPlaylist = JSON.parse (localStorage.getItem('playlist')) ?? [
+    napista,
+    Lucidez,
+    Minhalevada
+];
 let sortedPlaylist = [...originalPlaylist];
 let index = 0;
 
@@ -61,13 +69,26 @@ function playPausedecider() {
         playsong();
     }
 }
+function likeButtonRender(){
+   if (sortedPlaylist[index].liked === true){
+    likebutton.querySelector('.bi').classList.remove('bi-heart');
+    likebutton.querySelector('.bi').classList.add('bi-heart-fill');
+likebutton.classList.add('button-active');
+   }
+   else {
+        likebutton.querySelector('.bi').classList.add('bi-heart');
+        likebutton.querySelector('.bi').classList.remove('bi-heart-fill');
+    likebutton.classList.add('button-active');
+   }
+};
 
 function inicializarmusica() {
     cover.src = `./imagens/${sortedPlaylist[index].file}.jpg`;
     song.src = `./songs/${sortedPlaylist[index].file}.mp3`;
     songname.innerText = sortedPlaylist[index].songname;
     bandname.innerText = sortedPlaylist[index].artist;
-}
+    likeButtonRender();
+};
 
 function backsong() {
     if (index === 0) {
@@ -78,7 +99,7 @@ function backsong() {
     }
     inicializarmusica();
     playsong();
-}
+};
 
 
 function nextsong() {
@@ -150,6 +171,7 @@ function repeatButtonClicked(){
             playsong();
         }
     }
+
 function toHHMMSS(originalNumber) {
 let hours = Math.floor(originalNumber / 3600)
 let min = Math.floor((originalNumber - hours * 3600) / 60);
@@ -160,13 +182,22 @@ return `${hours.toString().padStart(2, '0')}:${min
     .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
 }
 
-
 function updateTotalTime() {
     toHHMMSS(song.duration);
     totalTime.innerText = toHHMMSS (song.duration);
 }
 
-
+function likeButtonclicked(){
+    if(sortedPlaylist[index].liked === false){
+        sortedPlaylist[index].liked = true
+    }
+    else {
+        sortedPlaylist[index].liked = false;
+    }
+    likeButtonRender();
+    localStorage.setItem('playlist',JSON.stringify(originalPlaylist)
+    );
+}
 
 inicializarmusica();
 
@@ -179,3 +210,4 @@ song.addEventListener('loadedmetadata', updateTotalTime);
 progresscontainer.addEventListener('click', jumpTo);
 shuffleButton.addEventListener('click', shuffleButtonClicked);
 repeatButton.addEventListener('click', repeatButtonClicked);
+likebutton.addEventListener('click', likeButtonclicked);
