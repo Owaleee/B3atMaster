@@ -37,11 +37,7 @@ const Minhalevada = {
 let IsPlaying = false;
 let isShuffled = false;
 let repeatOn = false;
-const originalPlaylist = JSON.parse (localStorage.getItem('playlist')) ?? [
-    napista,
-    Lucidez,
-    Minhalevada
-];
+const originalPlaylist = JSON.parse(localStorage.getItem('playlist')) ?? [napista, Lucidez, Minhalevada];
 let sortedPlaylist = [...originalPlaylist];
 let index = 0;
 
@@ -69,17 +65,17 @@ function playPausedecider() {
         playsong();
     }
 }
-function likeButtonRender(){
-   if (sortedPlaylist[index].liked === true){
-    likebutton.querySelector('.bi').classList.remove('bi-heart');
-    likebutton.querySelector('.bi').classList.add('bi-heart-fill');
-likebutton.classList.add('button-active');
-   }
-   else {
+function likeButtonRender() {
+    if (sortedPlaylist[index].liked === true) {
+        likebutton.querySelector('.bi').classList.remove('bi-heart');
+        likebutton.querySelector('.bi').classList.add('bi-heart-fill');
+        likebutton.classList.add('button-active');
+    }
+    else {
         likebutton.querySelector('.bi').classList.add('bi-heart');
         likebutton.querySelector('.bi').classList.remove('bi-heart-fill');
-    likebutton.classList.add('button-active');
-   }
+        likebutton.classList.add('button-active');
+    }
 };
 
 function inicializarmusica() {
@@ -127,11 +123,11 @@ function jumpTo(event) {
 
 }
 
-function shuffleArray(preShuffleArray){
+function shuffleArray(preShuffleArray) {
     const size = preShuffleArray.length;
     let currentIndex = size - 1;
-    while (currentIndex > 0){
-        let randomIndex = Math.floor(Math.random()* size);
+    while (currentIndex > 0) {
+        let randomIndex = Math.floor(Math.random() * size);
         let aux = preShuffleArray[currentIndex];
         preShuffleArray[currentIndex] = preShuffleArray[randomIndex];
         preShuffleArray[randomIndex] = aux;
@@ -152,50 +148,50 @@ function shuffleButtonClicked() {
     }
 }
 
-function repeatButtonClicked(){
-    if(repeatOn === false) {
-    repeatOn = true;
-    repeatButton.classList.add('button-active');
-}
+function repeatButtonClicked() {
+    if (repeatOn === false) {
+        repeatOn = true;
+        repeatButton.classList.add('button-active');
+    }
     else {
-        repeatOn=false
+        repeatOn = false
         repeatButton.classList.remove("button-active");
     }
-    }
+}
 
-    function nextOrRepeat() {
-        if (repeatOn === false){
-            nextsong();
-        }
-        else {
-            playsong();
-        }
+function nextOrRepeat() {
+    if (repeatOn === false) {
+        nextsong();
     }
+    else {
+        playsong();
+    }
+}
 
 function toHHMMSS(originalNumber) {
-let hours = Math.floor(originalNumber / 3600)
-let min = Math.floor((originalNumber - hours * 3600) / 60);
-let secs = Math.floor(originalNumber -hours* 3600 - min * 60);
+    let hours = Math.floor(originalNumber / 3600)
+    let min = Math.floor((originalNumber - hours * 3600) / 60);
+    let secs = Math.floor(originalNumber - hours * 3600 - min * 60);
 
-return `${hours.toString().padStart(2, '0')}:${min
-    .toString()
-    .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+    return `${hours.toString().padStart(2, '0')}:${min
+        .toString()
+        .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
 }
 
 function updateTotalTime() {
     toHHMMSS(song.duration);
-    totalTime.innerText = toHHMMSS (song.duration);
+    totalTime.innerText = toHHMMSS(song.duration);
 }
 
-function likeButtonclicked(){
-    if(sortedPlaylist[index].liked === false){
+function likeButtonclicked() {
+    if (sortedPlaylist[index].liked === false) {
         sortedPlaylist[index].liked = true
     }
     else {
         sortedPlaylist[index].liked = false;
     }
     likeButtonRender();
-    localStorage.setItem('playlist',JSON.stringify(originalPlaylist)
+    localStorage.setItem('playlist', JSON.stringify(originalPlaylist)
     );
 }
 
