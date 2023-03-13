@@ -14,6 +14,7 @@ const songTime = document.getElementById("song-time")
 const totalTime = document.getElementById("total-time")
 
 
+
 const napista = {
     songname: "Na pista",
     artist: "-Thehc Mc,Aka Far-",
@@ -193,7 +194,8 @@ function likeButtonclicked() {
     likeButtonRender();
     localStorage.setItem('playlist', JSON.stringify(originalPlaylist)
     );
-}
+};
+
 
 inicializarmusica();
 
@@ -207,3 +209,4 @@ progresscontainer.addEventListener('click', jumpTo);
 shuffleButton.addEventListener('click', shuffleButtonClicked);
 repeatButton.addEventListener('click', repeatButtonClicked);
 likebutton.addEventListener('click', likeButtonclicked);
+
