@@ -12,6 +12,13 @@ html {
   width: 100%;
   height: 100%;
 }
+#OwAleeLogo{
+ color: rgb(104, 104, 104);
+ display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  cursor: pointer;
+}
 
 .button {
   background-color: inherit;
@@ -107,3 +114,20 @@ html {
   font-style: italic;
   margin-top: 0.1cm;
 }
+#OwAlee {
+background: none;
+border: none;
+font-size: large;
+cursor: pointer;
+color: rgb(255, 0, 217);
+animation: mudancaDeCor 3s ease infinite;
+}
+
+@keyframes mudancaDeCor {
+0% {
+  color: rgb(255, 0, 217);
+}
+25% {
+  color: rgb(255, 255, 255);
+
+}}
